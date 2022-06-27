@@ -1,0 +1,71 @@
+<snippet>
+	<content><![CDATA[
+struct suffix_array{
+
+    vector < int > init( string &s ){
+        s+='1' ; 
+        return suffix_sort(s); 
+    }
+
+    vector < int > suffix_sort( string &s ){
+        int cnt[256] = { 0 } , n = s.size(); 
+        rep( i, 0, n ){
+            cnt[s[i]]++; 
+        }
+
+        rep( i , 1 , 256 ){
+            cnt[i] += cnt[i-1] ; 
+        }
+        vector < int > p( n ,0 ) , c(n , 0 ); 
+        // p[i] -> stores the starting index of suffix string which is at position i 
+        // c[i] -> stores the equivalence class value of the suffix string starting at index i 
+
+
+
+        rep( i , 0 , n ){
+            p[--cnt[s[i]]] = i ; 
+        }
+        int cls = 0 ;  c[p[0]] = 0 ; 
+        rep( i , 1 , n ){
+            if( s[p[i]] != s[p[i-1]]) cls++; 
+            c[p[i]] = cls ; 
+        }
+
+
+        
+        for( int k = 0 ; (1<<k) < n ; k++ ){
+            vector < int > pc( n , 0 ) , cc( n , 0 ) ; 
+            for( int i = 0 ; i < n ; i++ ){
+                pc[i] = p[i] - (1<<k) ; 
+                if( pc[i] < 0 ) pc[i] += n ;  
+            }
+
+
+            vector < int > cnt( n , 0 ) ; 
+            rep( i, 0, n ){ cnt[c[p[i]]]++; }
+            rep( i, 1, n ){ cnt[i]+=cnt[i-1]; }
+            for( int i = n-1 ; i >=0 ; i-- ){
+                p[--cnt[c[pc[i]]]] = pc[i] ; 
+            }
+            cc[p[0]] = 0 ; int cls = 0 ;
+            for( int i = 1 ; i < n ; i++ ){
+                if( !(c[p[i]] == c[p[i-1]] && c[(p[i]+(1<<k))%n] == c[(p[i-1]+(1<<k))%n] ) ){
+                    cls++; 
+                }
+                cc[p[i]] = cls; 
+            }
+
+            swap( cc , c ) ; 
+
+        }
+        
+
+        return p ; 
+    } 
+}; 
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	 <tabTrigger>sfx</tabTrigger> 
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	 <scope>source.c++</scope> 
+</snippet>

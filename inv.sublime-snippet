@@ -1,0 +1,12 @@
+<snippet>
+	<content><![CDATA[
+ll  inv( int v  ){
+	if( v==1){return 1 ; }
+	return (p-p/v)*inv(p%v)%p;
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	 <tabTrigger>inv</tabTrigger> 
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	 <scope>source.c++</scope> 
+</snippet>

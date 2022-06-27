@@ -1,0 +1,46 @@
+<snippet>
+	<content><![CDATA[
+struct segtree{
+
+    vector < ll > f ; int n ; 
+    void init( int s ){
+        n=s ;
+        f.assign( 4*s , 0  );
+    }
+
+    ll combine( ll a , ll b ){
+
+        return a + b ; 
+    }
+
+    void up(int v, int tl, int tr, int pos, ll new_val) {
+    if (tl == tr) {
+        f[v] = new_val;
+    }else{
+        int tm = (tl + tr) / 2;
+        if (pos <= tm)
+            up(v*2, tl, tm, pos, new_val);
+        else
+            up(v*2+1, tm+1, tr, pos, new_val);
+        f[v] =  combine( f[v*2] ,  f[v*2+1] ) ;
+    }
+    }
+
+    ll sum(int v, int tl, int tr, int l, int r) {
+    if (l > r) 
+        return 0;
+    if (l == tl && r == tr) {
+        return f[v];
+    }
+    int tm = (tl + tr) / 2;
+    return combine( sum(v*2, tl, tm, l, min(r, tm))
+           ,  sum(v*2+1, tm+1, tr, max(l, tm+1), r) )  ;
+    }   
+
+};
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>segtree</tabTrigger> 
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	 <scope>source.c++</scope> 
+</snippet>

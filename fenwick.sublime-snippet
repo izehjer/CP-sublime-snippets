@@ -1,0 +1,38 @@
+<snippet>
+	<content><![CDATA[
+struct fenwick{          
+	
+	vector < ll > tree ; 
+	int n ; 
+	fenwick( int a ){
+		tree.assign(a+1,0) ; 
+		n = a ; 
+	} 	
+
+	ll query( int f ){
+		ll ret = 0 ; 
+		while( f > 0 ){
+			ret += tree[f] ; 
+			f -= f&(-f) ; 
+		}
+		return ret ; 
+	}
+
+	ll rquery( int l , int r ){
+		return query(r) - query(l-1) ; 
+	}
+
+	void upd( int i , int val ){
+		if( i < 1 ){ return ; }
+		while( i <=  n ){
+			tree[i] += val ; i += ( i&(-i)) ; 
+		}
+	}
+
+};
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>fenwick</tabTrigger> 
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	 <scope>source.c++</scope> 
+</snippet>
