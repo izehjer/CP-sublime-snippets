@@ -1,2 +1,2 @@
 # CP-sublime-snippets
-Colllection of some commmon snippets used in competitive programming.
+Colllection of some common snippets used in competitive programming.
